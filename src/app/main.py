@@ -57,8 +57,12 @@ def predict():
 
     request_datetime = datetime.today().strftime(format="%Y-%m-%d %H:%M:%S")
 
-    publish_to_topic('{"name":%s, "request_datetime":"%s", "result":%d, "status":"%s"}' % (
+    msg = ('{"name":"%s", "request_datetime":"%s", "result":%d, "status":"%s"}' % (
         name, request_datetime, result, status))
+
+    print(msg)
+
+    publish_to_topic(msg)
 
     response = jsonify(name=name, status=status)
 

@@ -22,6 +22,7 @@ def publish_to_topic(msg):
     print(f"Published messages to {topic_path}.")
     return future
 
+
 if __name__ == '__main__':
     publish_to_topic('{"name": "Aluno POS-CD-UEA",\
             "request_datetime":"2021-01-01", \
