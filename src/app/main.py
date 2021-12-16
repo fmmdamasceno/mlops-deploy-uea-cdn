@@ -8,8 +8,11 @@ from datetime import datetime
 # from pubsub import
 
 from flask import Flask, request, jsonify
-from transform_data import encode_data
+from src.data.transform_data import encode_data
 from flask_basicauth import BasicAuth
+from pubsub import publish_to_topic
+from src.utils.env import get_env_var
+from src.utils.constants import MODEL_RESULT_1, MODEL_RESULT_0
 
 features = ['gender',
             'enrolled_university',
@@ -23,8 +26,8 @@ features = ['gender',
             'training_hours']
 
 app = Flask(__name__)
-app.config["BASIC_AUTH_USERNAME"] = os.environ.get('BASIC_AUTH_USERNAME')
-app.config["BASIC_AUTH_PASSWORD"] = os.environ.get('BASIC_AUTH_PASSWORD')
+app.config["BASIC_AUTH_USERNAME"] = get_env_var('BASIC_AUTH_USERNAME')
+app.config["BASIC_AUTH_PASSWORD"] = get_env_var('BASIC_AUTH_PASSWORD')
 
 basic_auth = BasicAuth(app)
 
@@ -48,13 +51,18 @@ def predict():
 
     result = int(model.predict(df_to_predict)[0])
 
-    status = "Procurando emprego"
+    status = MODEL_RESULT_1
     if result == 0:
-        status = "Não procurando emprego"
+        status = MODEL_RESULT_0
 
-    resultado = jsonify(name=name, status=status)
+    request_datetime = datetime.today().strftime(format="%Y-%m-%d %H:%M:%S")
 
-    return resultado
+    publish_to_topic('{"name":%s, "request_datetime":"%s", "result":%d, "status":"%s"}' % (
+        name, request_datetime, result, status))
+
+    response = jsonify(name=name, status=status)
+
+    return response
 
 
 @app.route("/")
