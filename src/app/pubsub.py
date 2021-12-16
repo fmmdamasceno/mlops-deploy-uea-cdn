@@ -7,8 +7,8 @@ import os
 from google.cloud import pubsub_v1
 import os
 
-from src.utils.env import get_env_var
-from src.utils.constants import TOPIC_ID
+from utils.env import get_env_var
+from utils.constants import TOPIC_ID
 
 
 def publish_to_topic(msg):

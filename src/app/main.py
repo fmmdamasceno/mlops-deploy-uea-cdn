@@ -8,11 +8,11 @@ from datetime import datetime
 # from pubsub import
 
 from flask import Flask, request, jsonify
-from src.data.transform_data import encode_data
+from transform_data import encode_data
 from flask_basicauth import BasicAuth
 from pubsub import publish_to_topic
-from src.utils.env import get_env_var
-from src.utils.constants import MODEL_RESULT_1, MODEL_RESULT_0
+from utils.env import get_env_var
+from utils.constants import MODEL_RESULT_1, MODEL_RESULT_0
 
 features = ['gender',
             'enrolled_university',
