@@ -1,4 +1,4 @@
-PROJECT_ID=mlops-uea-2
+PROJECT_ID=red-seeker-334115
 #make deploy
 deploy:
 	gcloud beta functions deploy event-new-prediction-created \

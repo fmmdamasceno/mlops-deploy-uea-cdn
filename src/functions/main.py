@@ -12,7 +12,7 @@ def initial_method(event, context):
     # Construct a BigQuery client object.
     client = bigquery.Client()
     # TODO(developer): Set table_id to the ID of table to append to.
-    table_id = "mlops-uea-2.dsjobs.predictions"
+    table_id = "red-seeker-334115.dsjobs.predictions"
     rows_to_insert = [score_message]
     errors = client.insert_rows_json(table_id, rows_to_insert)
     if errors == []:
