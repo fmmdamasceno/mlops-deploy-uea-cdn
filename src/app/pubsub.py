@@ -24,7 +24,7 @@ def publish_to_topic(msg):
 
 
 if __name__ == '__main__':
-    publish_to_topic('{"name": "Aluno POS-CD-UEA",\
+    publish_to_topic('{"id": "1",\
             "request_datetime":"2021-01-01", \
             "result":1, \
             "status":"Looking for Job" \

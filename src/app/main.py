@@ -46,8 +46,8 @@ def predict():
     encoded_data = encode_data(data)
 
     df_to_predict = pd.DataFrame(encoded_data, index=[0])
-    name = df_to_predict['name'][0]
-    df_to_predict = df_to_predict.drop(['name'], axis=1)
+    userId = df_to_predict['id'][0]
+    df_to_predict = df_to_predict.drop(['id'], axis=1)
 
     result = int(model.predict(df_to_predict)[0])
 
@@ -57,14 +57,14 @@ def predict():
 
     request_datetime = datetime.today().strftime(format="%Y-%m-%d %H:%M:%S")
 
-    msg = ('{"name":"%s", "request_datetime":"%s", "result":%d, "status":"%s"}' % (
-        name, request_datetime, result, status))
+    msg = ('{"id":"%s", "request_datetime":"%s", "result":%d, "status":"%s"}' % (
+        userId, request_datetime, result, status))
 
     print(msg)
 
     publish_to_topic(msg)
 
-    response = jsonify(name=name, status=status)
+    response = jsonify(id=userId, status=status)
 
     return response
 
