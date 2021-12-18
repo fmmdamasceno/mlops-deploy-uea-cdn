@@ -31,6 +31,7 @@ model = load_model('models/model.pkl')
 
 @app.route('/predict', methods=['POST'])
 @validate()
+@basic_auth.required
 def predict(body: RequestBodyModel):
     mapped_data = map_data(body)
     userId = body.id
